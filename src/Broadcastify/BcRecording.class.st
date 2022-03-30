@@ -18,6 +18,18 @@ BcRecording class >> all [
 	^ DB ifNil: [ DB := SortedCollection sortUsing: #startTimestamp descending ]
 ]
 
+{ #category : #persistence }
+BcRecording class >> restoreFrom: anObject [
+
+	DB := anObject.
+]
+
+{ #category : #persistence }
+BcRecording class >> spData [
+
+	^ DB.
+]
+
 { #category : #printing }
 BcRecording >> = rhs [
 	^ self date = rhs date and: [ self start = rhs start and: [ self end = rhs end ] ]
