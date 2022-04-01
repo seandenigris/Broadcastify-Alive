@@ -18,6 +18,30 @@ BcRecording class >> all [
 	^ DB ifNil: [ DB := SortedCollection sortUsing: #startTimestamp descending ]
 ]
 
+{ #category : #accessing }
+BcRecording class >> checkModelHealth [
+
+	| missingFiles files orphans |
+	missingFiles := self all reject: [ :e | e file exists ].
+	missingFiles ifNotEmpty: [ self notify: 'missing files' ].
+	
+	files := self folder allFiles select: [ :e | e extension = 'mp3' ].
+	orphans := files select: [ :e | self all noneSatisfy: [ :rec | rec file asFileReference = e asFileReference ] ].
+	orphans ifNotEmpty: [ 
+		| oRows |
+		self notify: 'orphans'.
+		oRows := orphans collect: [ :e | 
+			| wfrom |
+			wfrom := e cwExtendedAttributes whereFroms detect: [ :wf | wf includesSubstring: 'broadcast' ] ifNone: [ '' ].
+			{ wfrom asUrl file. e basename. e } ].
+		oRows sort: #second descending ].
+]
+
+{ #category : #accessing }
+BcRecording class >> folder [
+	^ FileLocator dynabookData / 'Dynabook' / 'Broadcastify'
+]
+
 { #category : #persistence }
 BcRecording class >> restoreFrom: anObject [
 
