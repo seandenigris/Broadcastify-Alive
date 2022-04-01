@@ -82,6 +82,7 @@ BcRecording >> printOn: aStream [
 	date ifNotNil: [ aStream nextPutAll: date mmddyyyy ].
 	start ifNotNil: [ aStream space; nextPutAll: start hhmm24 ].
 	end ifNotNil: [ aStream nextPutAll: ' - '; nextPutAll: end hhmm24 ].
+	file ifNotNil: [ aStream space; print: file ].
 ]
 
 { #category : #accessing }
