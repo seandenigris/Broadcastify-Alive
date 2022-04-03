@@ -100,6 +100,18 @@ BcRecording >> hash [
 	^ (self date bitXor: self start) bitXor: self
 ]
 
+{ #category : #accessing }
+BcRecording >> newPlayer [
+	^ (LlMediaPlayer on: self)
+		driver: LlPythonMpv new;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+BcRecording >> playIn: container [
+	self file asRlResource playIn: container
+]
+
 { #category : #printing }
 BcRecording >> printOn: aStream [
 
