@@ -25,7 +25,7 @@ BcRecording class >> checkModelHealth [
 	missingFiles := self all reject: [ :e | e file exists ].
 	missingFiles ifNotEmpty: [ self notify: 'missing files' ].
 	
-	files := self folder allFiles select: [ :e | e extension = 'mp3' ].
+	files := (self folder / '8799') allFiles select: [ :e | e extension = 'mp3' ].
 	orphans := files select: [ :e | self all noneSatisfy: [ :rec | rec file asFileReference = e asFileReference ] ].
 	orphans ifNotEmpty: [ 
 		| oRows |
