@@ -59,6 +59,18 @@ BcRecording >> = rhs [
 	^ self date = rhs date and: [ self start = rhs start and: [ self end = rhs end ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+BcRecording >> currentPosition: aTime in: container [
+	| targetOffset |
+	targetOffset := (aTime subtractTime: self start) asDuration.
+	self rlResource seekTo: targetOffset in: container
+]
+
+{ #category : #'as yet unclassified' }
+BcRecording >> currentTimeIn: container [
+	^ self rlResource currentTimeIn: container
+]
+
 { #category : #accessing }
 BcRecording >> date [
 
@@ -101,15 +113,25 @@ BcRecording >> hash [
 ]
 
 { #category : #accessing }
+BcRecording >> isPlayingIn: container [
+	^ self rlResource isPlayingIn: container
+]
+
+{ #category : #accessing }
 BcRecording >> newPlayer [
 	^ (LlMediaPlayer on: self)
 		driver: LlPythonMpv new;
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
+BcRecording >> pauseIn: container [ 
+	self rlResource pauseIn: container
+]
+
+{ #category : #accessing }
 BcRecording >> playIn: container [
-	self file asRlResource playIn: container
+	self rlResource playIn: container
 ]
 
 { #category : #printing }
@@ -119,6 +141,11 @@ BcRecording >> printOn: aStream [
 	start ifNotNil: [ aStream space; nextPutAll: start hhmm24 ].
 	end ifNotNil: [ aStream nextPutAll: ' - '; nextPutAll: end hhmm24 ].
 	file ifNotNil: [ aStream space; print: file ].
+]
+
+{ #category : #accessing }
+BcRecording >> rlResource [
+	^ self file asRlResource
 ]
 
 { #category : #accessing }
