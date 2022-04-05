@@ -134,6 +134,17 @@ BcRecording >> playIn: container [
 	self rlResource playIn: container
 ]
 
+{ #category : #'as yet unclassified' }
+BcRecording >> playbackSpeed: aNumber in: container [
+
+	self rlResource playbackSpeed: aNumber in: container
+]
+
+{ #category : #'as yet unclassified' }
+BcRecording >> playbackSpeedIn: container [
+	^ self rlResource playbackSpeedIn: container
+]
+
 { #category : #printing }
 BcRecording >> printOn: aStream [
 
