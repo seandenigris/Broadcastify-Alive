@@ -7,16 +7,8 @@ Class {
 		'end',
 		'file'
 	],
-	#classVars : [
-		'DB'
-	],
 	#category : #Broadcastify
 }
-
-{ #category : #accessing }
-BcRecording class >> all [
-	^ DB ifNil: [ DB := SortedCollection sortUsing: #startTimestamp descending ]
-]
 
 { #category : #accessing }
 BcRecording class >> checkModelHealth [
@@ -40,18 +32,6 @@ BcRecording class >> checkModelHealth [
 { #category : #accessing }
 BcRecording class >> folder [
 	^ FileLocator dynabookData / 'Dynabook' / 'Broadcastify'
-]
-
-{ #category : #persistence }
-BcRecording class >> restoreFrom: anObject [
-
-	DB := anObject.
-]
-
-{ #category : #persistence }
-BcRecording class >> spData [
-
-	^ DB.
 ]
 
 { #category : #printing }

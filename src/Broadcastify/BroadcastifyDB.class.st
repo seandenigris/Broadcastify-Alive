@@ -14,6 +14,6 @@ BroadcastifyDB class >> backupDirectoryParent [
 BroadcastifyDB class >> schema [
 
 	^ {
-			BcRecording.
+			BcArchive.
 		}.
 ]
