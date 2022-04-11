@@ -76,6 +76,16 @@ BcRecording >> end: anObject [
 ]
 
 { #category : #accessing }
+BcRecording >> endTimestamp [
+	| endDate |
+	endDate := self end > self start
+		ifTrue: [ self date ]
+		ifFalse: [ self date addDays: 1 ].
+	
+	^ DateAndTime date: endDate time: self end
+]
+
+{ #category : #accessing }
 BcRecording >> file [
 
 	^ file
@@ -90,6 +100,13 @@ BcRecording >> file: anObject [
 { #category : #printing }
 BcRecording >> hash [
 	^ (self date bitXor: self start) bitXor: self
+]
+
+{ #category : #'as yet unclassified' }
+BcRecording >> includes: aDateAndTime [ 
+	aDateAndTime > self endTimestamp ifTrue: [ ^ false ].
+	aDateAndTime < self startTimestamp ifTrue: [ ^ false ].
+	^ true
 ]
 
 { #category : #accessing }
