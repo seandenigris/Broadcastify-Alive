@@ -18,7 +18,7 @@ BaselineOfBroadcastify >> baseline: spec [
 
 	spec for: #'common' do: [
 		spec 
-			baseline: 'SimplePersistence' with: [
+			baseline: #'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ];
 			package: #'Broadcastify'  with: [
 				spec requires: #(#'SimplePersistence' ) ] ]
