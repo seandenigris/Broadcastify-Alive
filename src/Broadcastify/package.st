@@ -1,1 +1,1 @@
-Package { #name : #Broadcastify }
+Package { #name : 'Broadcastify' }

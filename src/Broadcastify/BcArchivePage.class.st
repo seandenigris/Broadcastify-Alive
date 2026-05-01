@@ -2,15 +2,16 @@
 `table := page elementLocatorFromSelector: 'table#archiveTimes'`
 "
 Class {
-	#name : #BcArchivePage,
-	#superclass : #LlAppleScriptWebPage,
+	#name : 'BcArchivePage',
+	#superclass : 'RlAppleScriptWebPage',
 	#instVars : [
 		'recordingsCount'
 	],
-	#category : #Broadcastify
+	#category : 'Broadcastify',
+	#package : 'Broadcastify'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> activeDate [
 	| urlString timestamp |
 	urlString := self doJavascript: (self locatorForRow: 1), '.querySelector("a").href'.
@@ -18,14 +19,14 @@ BcArchivePage >> activeDate [
 	^ timestamp asDate.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> downloadAll [
 
 	(1 to: self recordingsCount) do: [ :i |
 		self ensureRecordingAt: i ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> downloadRecordingAt: index [
 	
 	| rowLocator linkLocator download destination |
@@ -48,7 +49,7 @@ BcArchivePage >> downloadRecordingAt: index [
 	^ destination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> downloadedFiles [
 	| activeDatePattern previousDatePattern datePattern |
 	activeDatePattern := self activeDate yyyymmdd select: #isDigit.
@@ -57,7 +58,7 @@ BcArchivePage >> downloadedFiles [
 	^ (FileLocator home / 'Downloads') files select: [ :f | f basename matchesRegex: datePattern, '.*-', self feedID asString, '.mp3' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> ensureRecordingAt: index [
 	| timesString times recording linkLocator rowLocator linkHref file |
 	
@@ -84,29 +85,29 @@ BcArchivePage >> ensureRecordingAt: index [
 	BcRecording all add: recording
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> feedID [
 	^ 8799
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> folder [
 	^ (BcRecording folder / self feedID asString) ensureCreateDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> initialize [
 	super initialize.
 	url := 'https://m.broadcastify.com/archives/feed' asUrl / self feedID asString.
 	browser := CwSafari reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> locatorForRow: index [
 	^ self rowsLocator, '[', index asString, ']'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> recordingsCount [
 	| rowCount |
 	recordingsCount ifNotNil: [ ^ recordingsCount ].
@@ -115,7 +116,7 @@ BcArchivePage >> recordingsCount [
 	^ recordingsCount := rowCount - 1 "minus header row"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchivePage >> rowsLocator [
 	^ 'document.querySelectorAll("table#archiveTimes tr")'
 ]

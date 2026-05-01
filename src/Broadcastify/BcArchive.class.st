@@ -1,6 +1,6 @@
 Class {
-	#name : #BcArchive,
-	#superclass : #Object,
+	#name : 'BcArchive',
+	#superclass : 'Object',
 	#instVars : [
 		'feedID',
 		'recordings'
@@ -9,21 +9,22 @@ Class {
 		'Client',
 		'DB'
 	],
-	#category : #Broadcastify
+	#category : 'Broadcastify',
+	#package : 'Broadcastify'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive class >> all [
 
 	^ DB ifNil: [ DB := Bag new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive class >> client [
 	^ Client ifNil: [ Client := ZnClient new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive class >> logIn [
 	self client 
 		url: 'https://m.broadcastify.com/login/';
@@ -34,7 +35,7 @@ BcArchive class >> logIn [
 		post
 ]
 
-{ #category : #'instace creation' }
+{ #category : 'instace creation' }
 BcArchive class >> newRochelleFire [
 	| feedID |
 	feedID := '8799'.
@@ -48,24 +49,24 @@ BcArchive class >> newRochelleFire [
 			self all add: result  ]
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 BcArchive class >> restoreFrom: anObject [
 
 	DB := anObject.
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 BcArchive class >> spData [
 
 	^ DB.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> client [
 	^ self class client
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> ensureDownloadedRecordingsFor: aDate [
 	| data |
 	data := self recordingDataFor: aDate.
@@ -93,24 +94,24 @@ BcArchive >> ensureDownloadedRecordingsFor: aDate [
 				self recordings add: recording ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> feedID [
 
 	^ feedID
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> feedID: anObject [
 
 	feedID := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> folder [
 	^ (BcRecording folder / self feedID asString) ensureCreateDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> printOn: aStream [
 
 	aStream
@@ -119,7 +120,7 @@ BcArchive >> printOn: aStream [
 		nextPutAll: ' archive'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> recordingDataFor: aDate [ 
 	| dataString dictionary url |
 	url := 'https://m.broadcastify.com/archives/ajax.php' asUrl
@@ -130,17 +131,17 @@ BcArchive >> recordingDataFor: aDate [
 	^ dictionary at: #data
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> recordingFor: aDateAndTime [
 	^ self recordings detect: [ :e | e includes: aDateAndTime ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> recordings [
 	^ recordings ifNil: [ recordings := SortedCollection sortUsing: #startTimestamp descending ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcArchive >> recordingsFor: aDate [
 	| age |
 	age := Date today yearsSince: aDate.

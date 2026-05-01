@@ -1,16 +1,17 @@
 Class {
-	#name : #BcRecording,
-	#superclass : #Object,
+	#name : 'BcRecording',
+	#superclass : 'Object',
 	#instVars : [
 		'date',
 		'start',
 		'end',
 		'file'
 	],
-	#category : #Broadcastify
+	#category : 'Broadcastify',
+	#package : 'Broadcastify'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording class >> checkModelHealth [
 
 	| missingFiles files orphans |
@@ -29,53 +30,53 @@ BcRecording class >> checkModelHealth [
 		oRows sort: #second descending ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording class >> folder [
 	^ FileLocator dynabookData / 'Dynabook' / 'Broadcastify'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BcRecording >> = rhs [
 	^ self date = rhs date and: [ self start = rhs start and: [ self end = rhs end ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BcRecording >> currentPosition: aTime in: container [
 	| targetOffset |
 	targetOffset := (aTime subtractTime: self start) asDuration.
 	self rlResource seekTo: targetOffset in: container
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BcRecording >> currentTimeIn: container [
 	^ self rlResource currentTimeIn: container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> date [
 
 	^ date
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> date: anObject [
 
 	date := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> end [
 
 	^ end
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> end: anObject [
 
 	end := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> endTimestamp [
 	| endDate |
 	endDate := self end > self start
@@ -85,64 +86,64 @@ BcRecording >> endTimestamp [
 	^ DateAndTime date: endDate time: self end
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> file [
 
 	^ file
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> file: anObject [
 
 	file := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BcRecording >> hash [
 	^ (self date bitXor: self start) bitXor: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BcRecording >> includes: aDateAndTime [ 
 	aDateAndTime > self endTimestamp ifTrue: [ ^ false ].
 	aDateAndTime < self startTimestamp ifTrue: [ ^ false ].
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> isPlayingIn: container [
 	^ self rlResource isPlayingIn: container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> newPlayer [
 	^ (LlMediaPlayer on: self)
 		driver: LlPythonMpv new;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> pauseIn: container [ 
 	self rlResource pauseIn: container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> playIn: container [
 	self rlResource playIn: container
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BcRecording >> playbackSpeed: aNumber in: container [
 
 	self rlResource playbackSpeed: aNumber in: container
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 BcRecording >> playbackSpeedIn: container [
 	^ self rlResource playbackSpeedIn: container
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BcRecording >> printOn: aStream [
 
 	date ifNotNil: [ aStream nextPutAll: date mmddyyyy ].
@@ -151,24 +152,24 @@ BcRecording >> printOn: aStream [
 	file ifNotNil: [ aStream space; print: file ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> rlResource [
 	^ self file asRlResource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> start: anObject [
 
 	start := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BcRecording >> startTimestamp [
 	^ DateAndTime date: self date time: self start
 ]
