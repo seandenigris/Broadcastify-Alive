@@ -117,8 +117,8 @@ BcRecording >> isPlayingIn: container [
 
 { #category : 'accessing' }
 BcRecording >> newPlayer [
-	^ (LlMediaPlayer on: self)
-		driver: LlPythonMpv new;
+	^ (RlMediaPlayer on: self)
+		driver: RlPythonMpv new;
 		yourself
 ]
 
